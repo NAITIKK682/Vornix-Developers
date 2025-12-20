@@ -58,10 +58,10 @@ const values = [
 ];
 
 const stats = [
-  { label: 'Projects Completed', value: '120+' },
-  { label: 'Happy Clients', value: '85+' },
+  { label: 'Projects Completed', value: '20+' },
+  { label: 'Happy Clients', value: '15+' },
   { label: 'Technologies', value: '25+' },
-  { label: 'Lines of Code', value: '1M+' }
+  { label: 'Lines of Code', value: '25k' }
 ];
 
 // --- Animation Variants ---

@@ -2,62 +2,99 @@ import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { 
   Float, 
-  MeshDistortMaterial, 
   PerspectiveCamera, 
   ContactShadows, 
-  Environment,
-  MeshTransmissionMaterial 
+  Environment 
 } from '@react-three/drei';
 import * as THREE from 'three';
 
 /**
- * Professional Hero 3D Scene
- * Features: Adaptive scaling, interactive floating particles, 
- * high-end glass transmission materials, and performance-optimized rendering.
+ * Animated Robot Character (Replaces Torus Knot)
  */
-
-function AnimatedShape() {
-  const meshRef = useRef();
+function AnimatedRobot() {
+  const groupRef = useRef();
   const { viewport } = useThree();
-  
-  // Responsive scaling based on viewport width
-  const adaptiveScale = Math.min(viewport.width / 4, 1.2);
+  const adaptiveScale = Math.min(viewport.width / 6, 1);
+
+  // Refs for individual parts
+  const headRef = useRef();
+  const leftArmRef = useRef();
+  const rightArmRef = useRef();
 
   useFrame((state) => {
     const t = state.clock.getElapsedTime();
-    if (meshRef.current) {
-      // Subtle organic rotation
-      meshRef.current.rotation.x = Math.cos(t / 4) / 4;
-      meshRef.current.rotation.y = Math.sin(t / 4) / 4;
-      meshRef.current.rotation.z = Math.sin(t / 1.5) / 10;
-      // Gentle floating motion
-      meshRef.current.position.y = Math.sin(t / 1.5) / 5;
+    if (groupRef.current) {
+      // Gentle floating
+      groupRef.current.position.y = Math.sin(t * 0.8) * 0.1;
+    }
+
+    // Head nod & tilt
+    if (headRef.current) {
+      headRef.current.rotation.x = Math.sin(t * 0.7) * 0.05;
+      headRef.current.rotation.y = Math.cos(t * 0.5) * 0.07;
+    }
+
+    // Arm swing
+    if (leftArmRef.current) {
+      leftArmRef.current.rotation.z = Math.sin(t * 1.2) * 0.2 - 0.3;
+    }
+    if (rightArmRef.current) {
+      rightArmRef.current.rotation.z = Math.cos(t * 1.2) * 0.2 + 0.3;
     }
   });
 
   return (
-    <Float speed={2} rotationIntensity={1} floatIntensity={1}>
-      <mesh ref={meshRef} scale={adaptiveScale}>
-        <torusKnotGeometry args={[1, 0.35, 256, 32]} />
-        {/* High-end Translucent Material */}
-        <MeshTransmissionMaterial
-          backside
-          samples={8}
-          thickness={0.2}
-          chromaticAberration={0.02}
-          anisotropy={0.1}
-          distortion={0.1}
-          distortionScale={0.3}
-          temporalDistortion={0.5}
-          color="#8B5CF6"
-          attenuationDistance={0.5}
-          attenuationColor="#ffffff"
-        />
-      </mesh>
+    <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.5}>
+      <group ref={groupRef} scale={adaptiveScale}>
+        {/* Body */}
+        <mesh position={[0, 0, 0]} castShadow>
+          <boxGeometry args={[0.8, 1.2, 0.4]} />
+          <meshStandardMaterial color="#e0e0e0" metalness={0.7} roughness={0.3} />
+        </mesh>
+
+        {/* Head */}
+        <mesh ref={headRef} position={[0, 1.1, 0]} castShadow>
+          <sphereGeometry args={[0.45, 16, 16]} />
+          <meshStandardMaterial color="#d0d0d0" metalness={0.6} roughness={0.4} />
+        </mesh>
+
+        {/* Eyes */}
+        <mesh position={[-0.2, 1.2, 0.44]} castShadow>
+          <sphereGeometry args={[0.08, 12, 12]} />
+          <meshStandardMaterial color="#3b82f6" emissive="#3b82f6" emissiveIntensity={0.8} />
+        </mesh>
+        <mesh position={[0.2, 1.2, 0.44]} castShadow>
+          <sphereGeometry args={[0.08, 12, 12]} />
+          <meshStandardMaterial color="#3b82f6" emissive="#3b82f6" emissiveIntensity={0.8} />
+        </mesh>
+
+        {/* Left Arm */}
+        <mesh ref={leftArmRef} position={[-0.6, 0, 0]} castShadow>
+          <cylinderGeometry args={[0.1, 0.1, 0.8, 12]} />
+          <meshStandardMaterial color="#c0c0c0" metalness={0.8} roughness={0.2} />
+        </mesh>
+
+        {/* Right Arm */}
+        <mesh ref={rightArmRef} position={[0.6, 0, 0]} castShadow>
+          <cylinderGeometry args={[0.1, 0.1, 0.8, 12]} />
+          <meshStandardMaterial color="#c0c0c0" metalness={0.8} roughness={0.2} />
+        </mesh>
+
+        {/* Legs */}
+        <mesh position={[-0.25, -1.1, 0]} castShadow>
+          <cylinderGeometry args={[0.12, 0.12, 0.9, 12]} />
+          <meshStandardMaterial color="#b0b0b0" metalness={0.7} roughness={0.3} />
+        </mesh>
+        <mesh position={[0.25, -1.1, 0]} castShadow>
+          <cylinderGeometry args={[0.12, 0.12, 0.9, 12]} />
+          <meshStandardMaterial color="#b0b0b0" metalness={0.7} roughness={0.3} />
+        </mesh>
+      </group>
     </Float>
   );
 }
 
+// BackgroundParticles aur Rig same rehenge
 function BackgroundParticles({ count = 40 }) {
   const points = useMemo(() => {
     const p = new Float32Array(count * 3);
@@ -70,11 +107,9 @@ function BackgroundParticles({ count = 40 }) {
   }, [count]);
 
   const pointsRef = useRef();
-
   useFrame((state) => {
     const t = state.clock.getElapsedTime();
     pointsRef.current.rotation.y = t * 0.05;
-    pointsRef.current.rotation.x = t * 0.02;
   });
 
   return (
@@ -89,7 +124,7 @@ function BackgroundParticles({ count = 40 }) {
       </bufferGeometry>
       <pointsMaterial
         size={0.04}
-        color="#F97316" // Brand Orange accent
+        color="#60A5FA"
         transparent
         opacity={0.4}
         sizeAttenuation
@@ -98,53 +133,46 @@ function BackgroundParticles({ count = 40 }) {
   );
 }
 
+function Rig() {
+  const { camera, mouse } = useThree();
+  const vec = new THREE.Vector3();
+  return useFrame(() => {
+    camera.position.lerp(vec.set(mouse.x * 0.5, mouse.y * 0.5, 5), 0.05);
+    camera.lookAt(0, 0, 0);
+  });
+}
+
 export default function HeroScene() {
   return (
     <div className="w-full h-[60vh] md:h-full cursor-grab active:cursor-grabbing">
       <Canvas 
         shadows 
-        dpr={[1, 2]} // Performance optimization for high-density screens
+        dpr={[1, 2]}
         gl={{ antialias: true, alpha: true }}
       >
         <PerspectiveCamera makeDefault position={[0, 0, 5]} fov={40} />
         
-        {/* Cinematic Lighting */}
         <ambientLight intensity={0.2} />
         <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} castShadow />
-        <pointLight position={[-10, -10, -10]} intensity={0.5} color="#8B5CF6" />
+        <pointLight position={[-10, -10, -10]} intensity={0.5} color="#3B82F6" />
         
-        {/* Professional Environment & Effects */}
         <Environment preset="city" />
         
         <group position={[0, -0.5, 0]}>
-          <AnimatedShape />
-          
+          <AnimatedRobot />
           <ContactShadows
             resolution={1024}
             scale={10}
-            blur={2.5}
-            opacity={0.4}
+            blur={2}
+            opacity={0.3}
             far={10}
             color="#000000"
           />
         </group>
 
         <BackgroundParticles count={60} />
-
-        {/* Global movement that follows the mouse subtly */}
         <Rig />
       </Canvas>
     </div>
   );
-}
-
-// Subcomponent to add mouse-following inertia (Premium feel)
-function Rig() {
-  const { camera, mouse } = useThree();
-  const vec = new THREE.Vector3();
-
-  return useFrame(() => {
-    camera.position.lerp(vec.set(mouse.x * 0.5, mouse.y * 0.5, 5), 0.05);
-    camera.lookAt(0, 0, 0);
-  });
 }
