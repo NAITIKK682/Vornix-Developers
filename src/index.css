@@ -1,0 +1,174 @@
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "../design/style-tokens.css";
+
+/* ===== 1. ROOT & GLOBAL SETUP ===== */
+:root {
+  --btn-radius: 10px;
+}
+
+html, body, #root {
+  height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--bg);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden; /* Prevent horizontal scroll on mobile animations */
+}
+
+/* ===== 2. THE CRITICAL MOBILE OVERLAP FIXES ===== */
+
+/* Because the Navbar is 'fixed', it floats over the content. 
+   On mobile, we must push the Hero content down so the logo doesn't cover the text.
+*/
+main, .hero-section, section:first-of-type {
+  margin-top: 4.5rem; /* Space for the mobile header */
+}
+
+@media (min-width: 768px) {
+  main, .hero-section, section:first-of-type {
+    margin-top: 0; /* Desktop handles spacing via internal padding/HeroScene */
+  }
+}
+
+/* Ensure the logo image is strictly contained and doesn't "bleed" */
+header img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* High stack order for navigation */
+header {
+  isolation: isolate;
+  z-index: 100;
+}
+
+/* ===== 3. COMPONENT STYLES (PREVIOUS CODES) ===== */
+
+.glass {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 232, 240, 0.6);
+}
+
+.shadow-soft {
+  box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.06);
+}
+
+.shadow-card {
+  box-shadow: 0 6px 24px -6px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.shadow-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 32px -4px rgba(0, 0, 0, 0.12);
+}
+
+.card {
+  @apply bg-white rounded-xl p-6;
+  border: 1px solid rgba(226, 232, 240, 0.7);
+}
+
+/* ===== 4. BUTTON SYSTEM (MODERNIZED) ===== */
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  padding: 0.65rem 1.1rem;
+  border-radius: var(--btn-radius);
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 
+    transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+  box-shadow: 0 4px 12px -4px rgba(234, 88, 12, 0.25);
+}
+
+.btn-primary:hover {
+  background: #c2410c; 
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 24px -4px rgba(234, 88, 12, 0.4);
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1.5px solid var(--primary);
+  color: var(--primary);
+  padding: 0.62rem 1rem;
+  border-radius: var(--btn-radius);
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.btn-secondary:hover {
+  background: rgba(234, 88, 12, 0.04);
+  color: #c2410c;
+}
+
+/* ===== 5. 3D & SPECIAL EFFECTS ===== */
+
+.scene {
+  perspective: 1400px;
+}
+
+.tilt-card {
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.3, 1);
+  will-change: transform;
+}
+
+.tilt-card:hover {
+  transform: rotateX(5deg) rotateY(-5deg) translateZ(10px);
+}
+
+.card-front {
+  transform: translateZ(24px);
+  transition: transform 0.3s ease;
+}
+
+.text-gradient-primary {
+  background: linear-gradient(90deg, #1e293b, #475569);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===== 6. UTILITIES & ACCESSIBILITY ===== */
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem; /* Increased padding for better mobile air */
+}
+
+.hover-scale {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.hover-scale:hover {
+  transform: translateY(-4px);
+}
+
+*:focus-visible {
+  outline: 2px solid rgba(234, 88, 12, 0.5);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tilt-card, .card, .btn-primary, .shadow-card {
+    transition: none !important;
+    transform: none !important;
+  }
+}

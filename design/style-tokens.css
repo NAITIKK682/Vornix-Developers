@@ -1,0 +1,63 @@
+/* Design tokens for Vornix Developers */
+:root{
+  /* Colors */
+  --bg: #F8FAFC;
+  --surface: #FFFFFF;
+  --primary: #0F172A;
+  --accent-cyan: #06B6D4;
+  --accent-violet: #7C3AED;
+  --text-primary: #0B1220;
+  --muted: #64748B;
+
+  /* Neutral scale */
+  --neutral-50: #F8FAFC;
+  --neutral-100: #F1F5F9;
+  --neutral-200: #E2E8F0;
+  --neutral-300: #CBD5E1;
+  --neutral-400: #94A3B8;
+  --neutral-500: #64748B;
+  --neutral-600: #334155;
+  --neutral-700: #0B1220;
+
+  /* Typography */
+  --font-display: 'Poppins', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  --font-ui: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+
+  --fs-h1: 48px;
+  --fs-h2: 36px;
+  --fs-h3: 24px;
+  --fs-body: 16px;
+  --fs-small: 14px;
+
+  --lh-heading: 1.05;
+  --lh-body: 1.6;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 48px;
+
+  /* Radii & shadows */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --shadow-soft: 0 6px 20px rgba(15,23,42,0.06);
+
+  /* Breakpoints (used in notes) */
+  --bp-xs: 320px;
+  --bp-sm: 480px;
+  --bp-md: 768px;
+  --bp-lg: 1024px;
+  --bp-xl: 1440px;
+}
+
+/* Utility examples for dev */
+.h1{font-family:var(--font-display);font-size:var(--fs-h1);line-height:var(--lh-heading);color:var(--text-primary)}
+.h2{font-family:var(--font-display);font-size:var(--fs-h2);line-height:var(--lh-heading);color:var(--text-primary)}
+.body{font-family:var(--font-ui);font-size:var(--fs-body);line-height:var(--lh-body);color:var(--text-primary)}
+
+/* Accessibility helpers */
+.skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+.skip-link:focus{position:static;width:auto;height:auto}
