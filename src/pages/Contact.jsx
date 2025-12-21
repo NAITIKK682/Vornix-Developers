@@ -1,3 +1,22 @@
+/* ##############################################################################
+#                                                                            #
+#   🛑 DANGER ZONE: DATA COLLECTION API INTEGRATION                          #
+#   -------------------------------------------------------                  #
+#                                                                            #
+#   THIS PAGE IS RESPONSIBLE FOR USER LEAD GENERATION.                       #
+#   MODES: GOOGLE SHEETS (SHEETDB) & EMAIL (FORMSUBMIT)                      #
+#                                                                            #
+#   DO NOT EDIT:                                                             #
+1. API ENDPOINTS                                                         #
+2. FORM STATE KEYS (NAME, EMAIL, MESSAGE, ETC.)                          #
+3. SUBMISSION LOGIC                                                      #
+#                                                                            #
+#   BREAKING THIS CODE WILL RESULT IN LOSS OF CUSTOMER DATA.                 #
+#                                                                            #
+##############################################################################
+*/
+
+
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -145,27 +164,63 @@ export default function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // 1. Validation logic
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formState.email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+
     setStatus("loading");
 
-    // Simulate API Call
-    setTimeout(() => {
-      if (formState.email.includes("@")) {
-        setStatus("success");
-        // Reset form after success
-        setFormState({
-          name: "",
-          email: "",
-          subject: "General Inquiry",
-          message: "",
-          company: "",
-        });
-      } else {
-        setStatus("error");
+    try {
+      // 2. Direct API endpoints for Vite/React setup
+      const sheetDbUrl = "https://sheetdb.io/api/v1/bcwcf7943nr07";
+      const formSubmitUrl = "https://formsubmit.co/ajax/vornixdevelopers@gmail.com";
+
+      // 3. Parallel fetch calls to Google Sheets and Email
+      const [sheetRes, emailRes] = await Promise.all([
+        fetch(sheetDbUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ data: [formState] }),
+        }),
+        fetch(formSubmitUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formState),
+        })
+      ]);
+
+      if (!sheetRes.ok || !emailRes.ok) {
+        throw new Error("Service failed");
       }
+
+      // 4. WhatsApp redirect logic
+      const whatsappMsg = `*New Inquiry from Vornix*%0A*Name:* ${formState.name}%0A*Email:* ${formState.email}%0A*Subject:* ${formState.subject}%0A*Message:* ${formState.message}`;
+      window.open(`https://wa.me/918948866980?text=${whatsappMsg}`, '_blank');
+
+      // 5. Final success state
+      setStatus("success");
+      
+      // Reset form
+      setFormState({
+        name: "",
+        email: "",
+        subject: "General Inquiry",
+        message: "",
+        company: "",
+      });
 
       // Return to idle after 5 seconds
       setTimeout(() => setStatus("idle"), 5000);
-    }, 2000);
+
+    } catch (error) {
+      console.error("Submission error:", error);
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 5000);
+    }
   };
 
   return (
@@ -285,8 +340,8 @@ export default function Contact() {
                   {SOCIAL_LINKS.map((link) => (
                     <a
                       key={link.name}
-                      href={link.url} // <- URL add karo
-                      target="_blank" // new tab me open
+                      href={link.url} 
+                      target="_blank" 
                       rel="noopener noreferrer"
                       className={`p-3 rounded-xl bg-white/5 border border-white/10 ${link.color} transition-all hover:bg-white/10 text-xl`}
                     >
@@ -434,7 +489,7 @@ export default function Contact() {
                       onChange={handleInputChange}
                     >
                       <option>General Inquiry</option>
-                      <option>SaaS Development</option>
+                      <option>Web Development</option>
                       <option>AI/ML Integration</option>
                       <option>UI/UX Design</option>
                       <option>Marketing Strategy</option>
@@ -483,7 +538,7 @@ export default function Contact() {
                     animate={{ opacity: 1 }}
                     className="mt-4 text-center text-red-500 text-xs font-bold uppercase tracking-widest"
                   >
-                    Something went wrong. Please check your email.
+                    Something went wrong. Please check your network.
                   </motion.p>
                 )}
               </form>

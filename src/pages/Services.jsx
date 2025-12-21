@@ -278,7 +278,7 @@ export default function Services() {
               { icon: <FiCheck />, label: 'Projects Delivered', val: '20+' },
               { icon: <FiActivity />, label: 'Avg Speed Boost', val: '96%' },
               { icon: <FiTarget />, label: 'Client Retention', val: '98%' },
-              // { icon: <FiAward />, label: 'Tech Awards', val: '12' }
+              { icon: <FiAward />, label: 'Positive Reviews', val: '4.9/5' }
             ].map((stat, i) => (
               <div key={i} className="flex flex-col items-center md:items-start text-center md:text-left group">
                 <span className="text-3xl font-black text-slate-900 mb-1 group-hover:text-indigo-600 transition-colors tracking-tighter">{stat.val}</span>
