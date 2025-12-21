@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import {
   Instagram,
   Linkedin,
@@ -103,12 +103,12 @@ const TEAM_MEMBERS = [
     role: "UI/UX & Database",
     bio: "Logic-driven creative focused on human-centric design systems that bridge the gap between technical complexity and intuitive utility.",
     image: "/images/team/rakhmaji-gawade.jpg",
-skills: [
-  "Figma / Adobe XD (UI/UX Design)",
-  "Wireframing & Prototyping",
-  "Responsive Design",
-  "SQL & NoSQL Databases"
-],
+    skills: [
+      "Figma / Adobe XD (UI/UX Design)",
+      "Wireframing & Prototyping",
+      "Responsive Design",
+      "SQL & NoSQL Databases"
+    ],
 
     socials: {
       linkedin: "https://www.linkedin.com/in/rakhamaji-gawade-1a2b1b29a",
@@ -336,12 +336,24 @@ const TechMarquee = () => (
 
 export default function About() {
   const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
 
   return (
     <div
       className="bg-white font-poppins selection:bg-indigo-600 selection:text-white"
       ref={containerRef}
     >
+      {/* Scroll Progress Bar */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-1.5 bg-blue-600 origin-left z-[1000]"
+        style={{ scaleX }}
+      />
+
       {/* 1. HERO SECTION */}
       <section className="relative min-h-[80vh] flex items-center justify-center pt-10 overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -584,8 +596,9 @@ export default function About() {
                   initial={{ opacity: 0, x: i % 2 === 0 ? -50 : 50 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  className={`flex flex-col md:flex-row items-center gap-12 ${i % 2 === 0 ? "md:flex-row-reverse" : ""
-                    }`}
+                  className={`flex flex-col md:flex-row items-center gap-12 ${
+                    i % 2 === 0 ? "md:flex-row-reverse" : ""
+                  }`}
                 >
                   <div className="flex-1 text-center md:text-left">
                     <span className="text-6xl font-montserrat font-black text-indigo-50/80 block mb-2">
