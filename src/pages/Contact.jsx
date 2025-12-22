@@ -58,11 +58,11 @@ const CONTACT_METHODS = [
   },
   {
     title: "Call Us",
-    value: "+91 8948866980",
+    value: "8948866980 / 7972569918",
     desc: "Available Mon-Fri, 9am - 6pm IST.",
     icon: <FiPhone />,
     gradient: "from-purple-500 to-pink-600",
-    action: "tel:+918948866980",
+    action: "tel:+918948866980,+917972569918",
   },
   {
     title: "Office",
@@ -146,6 +146,7 @@ export default function Contact() {
   const [formState, setFormState] = useState({
     name: "",
     email: "",
+    phone: "", // Added Phone Number to state
     subject: "General Inquiry",
     message: "",
     company: "",
@@ -191,7 +192,7 @@ export default function Contact() {
         fetch(sheetDbUrl, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ data: [formState] }),
+          body: JSON.stringify({ data: [formState] }), // formState includes phone now
         }),
         fetch(formSubmitUrl, {
           method: "POST",
@@ -205,7 +206,7 @@ export default function Contact() {
       }
 
       // 4. WhatsApp redirect logic
-      const whatsappMsg = `*New Inquiry from Vornix*%0A*Name:* ${formState.name}%0A*Email:* ${formState.email}%0A*Subject:* ${formState.subject}%0A*Message:* ${formState.message}`;
+      const whatsappMsg = `*New Inquiry from Vornix*%0A*Name:* ${formState.name}%0A*Email:* ${formState.email}%0A*Phone:* ${formState.phone}%0A*Subject:* ${formState.subject}%0A*Message:* ${formState.message}`;
       window.open(`https://wa.me/918948866980?text=${whatsappMsg}`, '_blank');
 
       // 5. Final success state
@@ -215,6 +216,7 @@ export default function Contact() {
       setFormState({
         name: "",
         email: "",
+        phone: "",
         subject: "General Inquiry",
         message: "",
         company: "",
@@ -473,7 +475,24 @@ export default function Contact() {
                     </div>
                   </div>
 
+                  {/* Added Phone Number & Company in same row */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                    <div className="space-y-2 group">
+                      <label
+                        htmlFor="phone"
+                        className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 group-focus-within:text-blue-600 transition-colors"
+                      >
+                        Phone Number
+                      </label>
+                      <input
+                        id="phone"
+                        type="tel"
+                        value={formState.phone}
+                        placeholder="+91 98765 43210"
+                        className="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl px-6 py-4 text-slate-900 focus:outline-none focus:bg-white focus:border-blue-500 transition-all font-bold placeholder:text-slate-300"
+                        onChange={handleInputChange}
+                      />
+                    </div>
                     <div className="space-y-2">
                       <label
                         htmlFor="company"
@@ -490,6 +509,10 @@ export default function Contact() {
                         onChange={handleInputChange}
                       />
                     </div>
+                  </div>
+
+                  {/* Inquiry Type now full width or own section */}
+                  <div className="mb-8">
                     <div className="space-y-2">
                       <label
                         htmlFor="subject"
@@ -626,16 +649,19 @@ export default function Contact() {
           </SectionWrapper>
         </section>
 
-        {/* 5. GOOGLE MAPS PLACEHOLDER (NEW) */}
-        <section className="h-[400px] w-full bg-slate-200 grayscale relative overflow-hidden group">
-          <div className="absolute inset-0 bg-slate-900/10 z-10 group-hover:bg-transparent transition-all duration-700" />
-          {/* Placeholder for iframe or Map component */}
-          <div className="w-full h-full flex flex-col items-center justify-center text-slate-400">
-            <FiMapPin className="text-5xl mb-4" />
-            <p className="font-black uppercase tracking-[0.3em] text-[10px]">
-              Vornix Interactive Map
-            </p>
-          </div>
+        {/* 5. GOOGLE MAPS - VASAI, MAHARASHTRA */}
+        <section className="h-[400px] w-full bg-slate-200 relative overflow-hidden group">
+          <div className="absolute inset-0 bg-slate-900/10 z-10 group-hover:bg-transparent transition-all duration-700 pointer-events-none" />
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60264.09346430348!2d72.78446219800666!3d19.25629969634925!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b0e6e8c7512d%3A0x6b840134446b3060!2sVasai-Virar%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1703258756987!5m2!1sen!2sin" 
+            width="100%" 
+            height="100%" 
+            style={{ border: 0 }} 
+            allowFullScreen="" 
+            loading="lazy" 
+            referrerPolicy="no-referrer-when-downgrade"
+            title="Vornix Location - Vasai"
+          />
         </section>
       </div>
     </div>
