@@ -1,6 +1,6 @@
 /* ##############################################################################
 #                                                                              #
-#   🛑 DANGER ZONE: DATA COLLECTION API INTEGRATION                            #
+#           🛑 DANGER ZONE: DATA COLLECTION API INTEGRATION                   #
 #   -------------------------------------------------------                    #
 #                                                                              #
 #   THIS PAGE IS RESPONSIBLE FOR USER LEAD GENERATION.                         #
@@ -183,6 +183,24 @@ export default function Contact() {
     setStatus("loading");
 
     try {
+      // Generate timestamp with date, minutes, and AM/PM
+      const now = new Date();
+      const timestamp = now.toLocaleString('en-US', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+      });
+
+      // Prepare final data including the timestamp
+      const submissionData = {
+        ...formState,
+        submitted_at: timestamp
+      };
+
       // 2. Direct API endpoints for Vite/React setup
       const sheetDbUrl = "https://sheetdb.io/api/v1/bcwcf7943nr07";
       const formSubmitUrl = "https://formsubmit.co/ajax/vornixdevelopers@gmail.com";
@@ -192,12 +210,12 @@ export default function Contact() {
         fetch(sheetDbUrl, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ data: [formState] }), // formState includes phone now
+          body: JSON.stringify({ data: [submissionData] }), // submissionData includes date and time now
         }),
         fetch(formSubmitUrl, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formState),
+          body: JSON.stringify(submissionData),
         })
       ]);
 
@@ -206,7 +224,7 @@ export default function Contact() {
       }
 
       // 4. WhatsApp redirect logic
-      const whatsappMsg = `*New Inquiry from Vornix*%0A*Name:* ${formState.name}%0A*Email:* ${formState.email}%0A*Phone:* ${formState.phone}%0A*Subject:* ${formState.subject}%0A*Message:* ${formState.message}`;
+      const whatsappMsg = `*New Inquiry from Vornix*%0A*Name:* ${formState.name}%0A*Email:* ${formState.email}%0A*Phone:* ${formState.phone}%0A*Subject:* ${formState.subject}%0A*Message:* ${formState.message}%0A*Time:* ${timestamp}`;
       window.open(`https://wa.me/918948866980?text=${whatsappMsg}`, '_blank');
 
       // 5. Final success state
