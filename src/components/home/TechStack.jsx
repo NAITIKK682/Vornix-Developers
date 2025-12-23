@@ -1,126 +1,152 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../common/SectionWrapper';
 import { techData } from '../../data/techData';
 
-const categories = Object.keys(techData);
+/**
+ * Professional TechStack - Minimalist & High-Performance Edition
+ * Features: Liquid navigation, Glassmorphism, and explicit category filtering.
+ */
 
 export default function TechStack() {
+  // 1. Logic: Filter out unwanted categories
+  const categories = useMemo(() => 
+    Object.keys(techData).filter(cat => 
+      cat !== 'mobile_app_solutions' && 
+      cat !== 'cloud_cyber_security'
+    ), []
+  );
+
   const [activeCategory, setActiveCategory] = useState(categories[0]);
 
   return (
-    <SectionWrapper className="bg-slate-50/50 dark:bg-slate-900/20 py-24 overflow-hidden">
-      {/* Section Header */}
-      <div className="text-center mb-16 px-4">
-        <motion.span 
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-orange-600 font-bold tracking-[0.2em] uppercase text-xs md:text-sm mb-3 block"
-        >
-          Our Arsenal
-        </motion.span>
-        <motion.h2 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-          className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight"
-        >
-          Modern Tech for <span className="text-indigo-600">Scale.</span>
-        </motion.h2>
-        <motion.p 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          className="text-slate-600 dark:text-slate-400 mt-4 max-w-2xl mx-auto text-base md:text-lg"
-        >
-          We leverage the latest industry-standard tools to build resilient, 
-          future-proof digital products.
-        </motion.p>
+    <SectionWrapper className="relative bg-[#FFFFFF] py-20 overflow-hidden">
+      
+      {/* 2. Aesthetic Background: Subtle Glass & Grain */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-indigo-50/40 blur-[120px] rounded-full mix-blend-multiply" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-orange-50/40 blur-[120px] rounded-full mix-blend-multiply" />
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-8 items-start max-w-7xl mx-auto px-4">
-        {/* Sidebar Navigation */}
-        <div className="w-full lg:w-1/4 lg:sticky lg:top-24 z-20">
-          <nav className="flex lg:flex-col p-1.5 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-x-auto lg:overflow-visible no-scrollbar">
+      <div className="container mx-auto px-4 relative z-10">
+        
+        {/* 3. Professional Header: Minimalist Typography */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+          <div className="max-w-xl">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              className="flex items-center gap-2 mb-4"
+            >
+              <span className="w-12 h-[1px] bg-indigo-600" />
+              <span className="text-indigo-600 font-black uppercase tracking-[0.3em] text-[10px]">
+                Technical Superiority
+              </span>
+            </motion.div>
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter"
+            >
+              The <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-900 to-slate-500 italic">Vornix</span> Stack.
+            </motion.h2>
+          </div>
+          
+          <motion.p 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="text-slate-500 text-sm md:text-base font-medium max-w-xs md:text-right"
+          >
+            Optimized for performance, security, and extreme scalability.
+          </motion.p>
+        </div>
+
+        {/* 4. Navigation: Compact Liquid Pill Design */}
+        <div className="flex justify-start md:justify-center mb-10">
+          <nav className="flex p-1 bg-slate-100/50 backdrop-blur-md rounded-2xl border border-slate-200/50 overflow-x-auto no-scrollbar">
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`relative flex-1 lg:flex-none text-left px-6 py-4 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 outline-none whitespace-nowrap ${
-                  activeCategory === category
-                    ? 'text-white'
-                    : 'text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50'
+                className={`relative px-8 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all duration-500 whitespace-nowrap ${
+                  activeCategory === category ? 'text-white' : 'text-slate-400 hover:text-slate-600'
                 }`}
               >
                 {activeCategory === category && (
                   <motion.div
-                    layoutId="activeCategoryPill"
-                    className="absolute inset-0 bg-gradient-to-r from-orange-500 to-orange-600 shadow-lg shadow-orange-500/30 rounded-xl"
+                    layoutId="activeTab"
+                    className="absolute inset-0 bg-slate-900 rounded-xl shadow-lg"
                     transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
                   />
                 )}
-                <span className="relative z-10 capitalize flex items-center justify-between">
-                  {category.replace('_', ' & ')}
-                  {activeCategory === category && <span className="hidden lg:block ml-2">→</span>}
-                </span>
+                <span className="relative z-10">{category.replace('_', ' ')}</span>
               </button>
             ))}
           </nav>
         </div>
 
-        {/* Tech Grid */}
-        <div className="w-full lg:w-3/4 min-h-[400px]">
+        {/* 5. Tech Grid: High-End Hover Effects */}
+        <div className="max-w-5xl mx-auto">
           <motion.div 
             layout
-            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"
+            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3"
           >
             <AnimatePresence mode="popLayout">
               {techData[activeCategory]?.map((tech, index) => (
                 <motion.div
                   key={tech.name}
                   layout
-                  initial={{ opacity: 0, scale: 0.9, y: 10 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
-                  transition={{ 
-                    delay: index * 0.04,
-                    type: "spring",
-                    stiffness: 300,
-                    damping: 25 
-                  }}
-                  whileHover={{ y: -8, rotate: 1 }}
-                  className="group relative flex flex-col items-center justify-center p-6 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 hover:border-orange-500/50 transition-all shadow-sm hover:shadow-xl hover:shadow-orange-500/10"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ delay: index * 0.03 }}
+                  whileHover={{ y: -5 }}
+                  className="group relative flex flex-col items-center p-6 bg-white border border-slate-100 rounded-[2rem] hover:border-indigo-500/20 hover:shadow-[0_20px_40px_rgba(0,0,0,0.04)] transition-all duration-500"
                 >
-                  {/* Hover Glow Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-orange-500/5 to-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl" />
-                  
-                  {/* Icon Container with Error Handling */}
-                  <div className="relative w-14 h-14 mb-4 transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 flex items-center justify-center">
+                  <div className="relative w-12 h-12 mb-4 flex items-center justify-center">
+                    {/* Subtle Glow behind icon */}
+                    <div className="absolute inset-0 bg-indigo-500/10 rounded-full blur-xl scale-0 group-hover:scale-150 transition-transform duration-500" />
+                    
                     <img
                       src={tech.icon}
                       alt={tech.name}
-                      className="w-full h-full object-contain filter group-hover:drop-shadow-lg"
-                      loading="lazy"
+                      className="relative w-full h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-500"
                       onError={(e) => {
-                        e.target.src = `https://ui-avatars.com/api/?name=${tech.name}&background=random&color=fff`;
+                        e.target.src = `https://ui-avatars.com/api/?name=${tech.name}&background=f1f5f9&color=64748b`;
                       }}
                     />
                   </div>
                   
-                  <span className="relative text-xs md:text-sm font-bold text-slate-700 dark:text-slate-300 text-center tracking-tight">
+                  <span className="text-[11px] font-black text-slate-400 group-hover:text-slate-900 uppercase tracking-wider transition-colors">
                     {tech.name}
                   </span>
 
                   {/* Corner Accent */}
-                  <div className="absolute top-2 right-2 w-1 h-1 rounded-full bg-slate-200 dark:bg-slate-700 group-hover:bg-orange-500 group-hover:scale-150 transition-all" />
+                  <div className="absolute top-4 right-4 w-1 h-1 rounded-full bg-slate-100 group-hover:bg-indigo-500 transition-colors" />
                 </motion.div>
               ))}
             </AnimatePresence>
           </motion.div>
         </div>
+
+        {/* 6. Professional Footer: Micro-Detail */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          className="mt-16 text-center"
+        >
+          <div className="inline-flex items-center gap-4 px-6 py-2 rounded-full border border-slate-100 bg-slate-50/50">
+            <div className="flex -space-x-2">
+              {[1, 2, 3].map(i => (
+                <div key={i} className="w-6 h-6 rounded-full bg-white border border-slate-200" />
+              ))}
+            </div>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+              Trusted by <span className="text-slate-900">150+</span> Global Partners
+            </p>
+          </div>
+        </motion.div>
+
       </div>
     </SectionWrapper>
   );

@@ -520,13 +520,13 @@ export default function Portfolio() {
               viewport={{ once: true }}
             >
               <div className="absolute inset-0 bg-blue-600 rounded-full blur-[200px] opacity-10" />
-              <div className="relative bg-slate-800/40 border border-slate-700/50 p-12 rounded-[3.5rem] shadow-4xl backdrop-blur-xl overflow-hidden">
+              <div className="relative bg-slate-900/80 border border-slate-700/50 p-12 rounded-[3.5rem] shadow-4xl backdrop-blur-md overflow-hidden">
                 <div className="flex gap-2 mb-10">
                   <div className="w-3 h-3 rounded-full bg-red-500/50" />
                   <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
                   <div className="w-3 h-3 rounded-full bg-green-500/50" />
                 </div>
-                <pre className="text-sm md:text-base text-blue-300 font-mono leading-loose overflow-x-auto">
+                <pre className="text-sm md:text-base text-blue-400 font-mono leading-loose overflow-x-auto">
                   <code>
                     {`/**
  * @class ProductionEngine

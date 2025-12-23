@@ -13,7 +13,7 @@ const features = [
   {
     title: "Startup-First",
     desc: "We build MVP-ready products designed to scale from zero to millions of users without technical debt.",
-    icon: "zap",
+    icon: "rocket",
     color: "text-amber-500",
     bg: "bg-amber-500/10"
   },

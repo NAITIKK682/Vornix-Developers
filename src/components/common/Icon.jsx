@@ -3,12 +3,6 @@ import { motion } from 'framer-motion';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-/**
- * Enhanced Icon Component
- * Features: Framer Motion animations, dynamic scaling, memoized performance, 
- * and accessibility-first markup.
- */
-
 const cn = (...inputs) => twMerge(clsx(inputs));
 
 const iconList = {
@@ -18,6 +12,10 @@ const iconList = {
   portfolio: (p) => <><rect x="3" y="3" width="18" height="18" rx="2" {...p} /><path d="M9 11l3 3 5-5" {...p} /></>,
   contact: (p) => <><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" {...p} /><path d="M22 6L12 13 2 6" {...p} /></>,
   
+  // ADDED: Startup Icons (Zap and Rocket)
+  zap: (p) => <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" {...p} />,
+  rocket: (p) => <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3m5.99-5.99l-5.64 5.64a4.41 4.41 0 0 0-1.33 2.05l-.18.66l2.13 2.13l.66-.18a4.41 4.41 0 0 0 2.05-1.33l5.64-5.64a4.34 4.34 0 0 0-1.33-7.66l-1.27-.3a1.1 1.1 0 0 0-1.32 1.32l.3 1.27a4.34 4.34 0 0 0 4.29 3.03z" {...p} />,
+
   // UI Elements
   menu: (p) => <path d="M3 6h18M3 12h18M3 18h16" {...p} />,
   close: (p) => <path d="M18 6L6 18M6 6l12 12" {...p} />,
@@ -33,7 +31,7 @@ const iconList = {
   infoCircle: (p) => <><circle cx="12" cy="12" r="10" {...p} /><line x1="12" y1="16" x2="12" y2="12" {...p} /><line x1="12" y1="8" x2="12.01" y2="8" {...p} /></>,
   star: (p) => <polygon points="12 2 15.09 10.26 24 10.27 17.18 16.70 19.34 25.07 12 19.54 4.66 25.07 6.82 16.70 0 10.27 8.91 10.26 12 2" {...p} />,
   
-  // Tech & Social (For Footer/Contact)
+  // Tech & Social
   github: (p) => <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7a3.37 3.37 0 0 0-.94 2.58V22" {...p} />,
   linkedin: (p) => <><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" {...p} /><rect x="2" y="9" width="4" height="12" {...p} /><circle cx="4" cy="4" r="2" {...p} /></>,
   twitter: (p) => <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" {...p} />,
@@ -45,13 +43,6 @@ const iconList = {
   web: (p) => <><circle cx="12" cy="12" r="10" {...p} /><line x1="2" y1="12" x2="22" y2="12" {...p} /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" {...p} /></>,
 };
 
-/**
- * @param {string} name - The key of the icon to render
- * @param {number} size - Width/Height in pixels
- * @param {string} color - Tailwind text class or hex color
- * @param {boolean} animate - Whether to apply hover micro-interactions
- * @param {string} hoverColor - Color to transition to on hover
- */
 const Icon = memo(({ 
   name, 
   size = 24, 
@@ -69,12 +60,11 @@ const Icon = memo(({
     return null;
   }
 
-  // Define animation variants for premium micro-interactions
   const variants = {
     initial: { scale: 1, rotate: 0 },
     hover: { 
       scale: animate ? 1.15 : 1, 
-      rotate: animate && name === 'settings' ? 45 : 0,
+      rotate: animate && name === 'rocket' ? -10 : 0, // Custom tilt for rocket
       transition: { type: 'spring', stiffness: 400, damping: 10 }
     },
     tap: { scale: 0.9 }
@@ -97,7 +87,6 @@ const Icon = memo(({
       variants={variants}
       className={cn(
         "inline-block flex-shrink-0 transition-colors duration-300",
-        hoverColor && `hover:stroke-[${hoverColor}]`,
         className
       )}
       role="img"
