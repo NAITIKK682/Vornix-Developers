@@ -271,9 +271,9 @@ export default function Contact() {
         />
       </div>
 
-      <div className="pt-1.5">
+      <div className="pt-0"> {/* FIX: Removed pt-1.5 to eliminate top gap */}
         {/* 2. HERO SECTION */}
-        <section className="relative pt-40 pb-20 z-10">
+        <section className="relative pt-20 pb-20 z-10"> {/* FIX: Adjusted pt-40 to pt-20 to reduce space below navbar */}
           <SectionWrapper>
             <div className="max-w-5xl mx-auto text-center px-6">
               <motion.div

@@ -21,35 +21,35 @@ const PROJECTS = [
   // 1. WEB DEVELOPMENT - E-COMMERCE
   {
     id: 1,
-    title: 'TasteMelt Luxury Store',
+    title: 'TasteMelt Restaurant Website',
     category: 'Web Development',
     type: 'E-Commerce Solutions',
-    tech: ['Next.js 14', 'Stripe', 'Tailwind', 'Sanity.io'],
+    tech: ['React.js', 'Vite', 'Tailwind CSS', 'Node.js'],
     img: '/images/portfolio/web-1.jpg',
     liveUrl: 'https://tastemelt.vercel.app/',
-    description: 'A high-conversion headless commerce engine with sub-100ms page loads, complex inventory management, and custom checkout flows.'
+    description: 'A responsive restaurant website offering menu browsing, reservations, and contact features for seamless user engagement.'
   },
   // 2. WEB DEVELOPMENT - WEB APPLICATIONS
   {
     id: 2,
-    title: 'Quantum SaaS Dashboard',
+    title: 'TripMitra',
     category: 'Web Development',
     type: 'Web Applications',
-    tech: ['React', 'Node.js', 'Prisma', 'PostgreSQL'],
+    tech: ['JavaScript', 'React.js', 'Next.js', 'Tailwind CSS'],
     img: '/images/portfolio/web-2.jpg',
-    liveUrl: 'https://quantum.example.com',
-    description: 'Enterprise-grade resource planning tool featuring real-time data sync, advanced permission layers, and dynamic reporting widgets.'
+    liveUrl: 'https://trip-mitra-ojrs2evee-naitikk682s-projects.vercel.app/',
+    description: 'A clean and responsive travel website for exploring and planning trips across India.'
   },
-  // 3. WEB DEVELOPMENT - PORTFOLIO & RESUME
+  // 3. WEB DEVELOPMENT - Agriculture
   {
     id: 3,
-    title: 'Persona Portfolio Pro',
+    title: 'AgriSmart 2.0',
     category: 'Web Development',
-    type: 'Portfolio & Resume',
-    tech: ['Framer Motion', 'React', 'GSAP', 'Three.js'],
+    type: 'Agriculture',
+    tech: ['React.js', 'Flask', 'TensorFlow', 'Tailwind CSS'],
     img: '/images/portfolio/web-3.jpg',
-    liveUrl: 'https://persona.example.com',
-    description: 'Immersive personal branding experience with scroll-triggered storytelling, 3D element integration, and high-fidelity transitions.'
+    liveUrl: 'https://agri-smart-2-0-mjzzs34mg-naitikk682s-projects.vercel.app/',
+    description: 'AgriSmart 2.0 – AI-powered bilingual farming assistant for Indian farmers with smart tools and community support.'
   },
   // 4. WEB DEVELOPMENT - REAL ESTATE PORTAL
   {
@@ -386,52 +386,18 @@ export default function Portfolio() {
                   transition={{ duration: 0.5, ease: "easeOut" }}
                   className="group relative w-full block"
                 >
-                  {/* LANDSCAPE IMAGE WITH LIVE LINK BUTTON OVERLAY */}
+                  {/* SCROLLABLE IMAGE CONTAINER */}
                   <div 
-                    className="relative aspect-video overflow-hidden rounded-[1.5rem] md:rounded-[2.5rem] bg-slate-100 mb-8 md:mb-10 cursor-zoom-in transition-all duration-700 hover:shadow-[0_40px_80px_rgba(0,0,0,0.12)]"
-                    onClick={() => setSelectedProject(project)}
+                    className="relative aspect-video overflow-y-auto overflow-x-hidden rounded-[1.5rem] md:rounded-[2.5rem] bg-slate-100 mb-8 md:mb-10 transition-all duration-700 hover:shadow-[0_40px_80px_rgba(0,0,0,0.12)] border border-slate-200 scroll-smooth no-scrollbar"
                   >
                     <motion.img 
-                      layoutId={`img-${project.id}`}
                       src={project.img} 
                       alt={project.title}
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2s] ease-out md:group-hover:scale-105"
+                      className="w-full h-auto object-top"
                     />
                     
-                    {/* HOVER OVERLAY SYSTEM - Only visible on hover (Desktop) or accessible via tap */}
-                    <div className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-all duration-500 backdrop-blur-[3px] flex items-center justify-center">
-                      <div className="flex flex-col sm:flex-row gap-4 px-6 scale-90 group-hover:scale-100 transition-transform duration-500">
-                        {/* Action 1: Full View */}
-                        <Button 
-                          variant="white" 
-                          size="md" 
-                          className="font-black uppercase tracking-widest text-[10px]"
-                          onClick={(e) => { e.stopPropagation(); setSelectedProject(project); }}
-                        >
-                          View Details
-                        </Button>
-                        
-                        {/* Action 2: DIRECT LIVE LINK BUTTON */}
-                        <a 
-                          href={project.liveUrl} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <Button 
-                            variant="primary" 
-                            size="md" 
-                            className="font-black uppercase tracking-widest text-[10px]"
-                          >
-                            Live Demo 
-                            <svg className="ml-2 w-3 h-3 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-                          </Button>
-                        </a>
-                      </div>
-                    </div>
-                    
-                    {/* Floating Status Tag */}
-                    <div className="absolute top-4 left-4 md:top-8 md:left-8">
+                    {/* Floating Status Tag - Kept for context */}
+                    <div className="sticky top-4 left-4 md:top-8 md:left-8 z-20 pointer-events-none">
                       <span className="px-4 py-1 md:px-6 md:py-2 bg-white/90 backdrop-blur-md shadow-xl rounded-full text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-slate-900">
                         {project.type}
                       </span>
@@ -448,9 +414,24 @@ export default function Portfolio() {
                     <h3 className="text-3xl md:text-5xl font-black text-slate-900 mb-4 md:mb-6 group-hover:text-blue-600 transition-colors tracking-tighter leading-none">
                       {project.title}
                     </h3>
-                    <p className="text-slate-500 text-base md:text-xl leading-relaxed font-medium line-clamp-2 max-w-2xl">
+                    <p className="text-slate-500 text-base md:text-xl leading-relaxed font-medium line-clamp-2 max-w-2xl mb-6">
                       {project.description}
                     </p>
+
+                    {/* NEW LIVE LINK PLACEMENT */}
+                    <div className="flex items-center">
+                        <a 
+                          href={project.liveUrl} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 text-blue-600 font-black uppercase tracking-widest text-[11px] group/link border-b-2 border-transparent hover:border-blue-600 transition-all pb-1"
+                        >
+                          Launch Experience
+                          <svg className="w-4 h-4 transform group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                          </svg>
+                        </a>
+                    </div>
                   </div>
                 </motion.div>
               ))}

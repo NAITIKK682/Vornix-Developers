@@ -238,7 +238,7 @@ const FAQS = [
    ========================================================================== */
 
 const fadeInUp = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: { opacity: 0, y: 20 }, // Reduced y from 40 to 20 for smoother reveal on mobile
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } }
 };
 
@@ -360,10 +360,11 @@ export default function Services() {
         style={{ scaleX }} 
       />
 
-      <div className="pt-1.5">
+      <div>
         
         {/* 1. HERO SECTION */}
-        <section className="relative pt-32 pb-24 md:pt-56 md:pb-40 overflow-hidden bg-white">
+        {/* Fixed excessive gap by reducing pt values to accommodate navbar height */}
+        <section className="relative pt-20 pb-16 md:pt-32 md:pb-32 overflow-hidden bg-white">
           {/* Ambient Background Elements */}
           <div className="absolute top-0 right-0 w-[400px] md:w-[900px] h-[400px] md:h-[900px] bg-indigo-50/50 rounded-full blur-[100px] md:blur-[150px] -translate-y-1/2 translate-x-1/3 animate-pulse" />
           <div className="absolute bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-blue-50/50 rounded-full blur-[80px] md:blur-[120px] translate-y-1/2 -translate-x-1/4" />
@@ -439,9 +440,10 @@ export default function Services() {
         </section>
 
         {/* 3. PRIMARY SERVICES GRID */}
-        <section id="services-grid" className="py-24 md:py-40 bg-[#F8FAFC]">
+        {/* Adjusted py to be consistent and visible on all screens */}
+        <section id="services-grid" className="py-16 md:py-32 bg-[#F8FAFC]">
           <SectionWrapper>
-            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-10 mb-24 px-4">
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-10 mb-16 md:mb-24 px-4">
               <div className="max-w-3xl">
                 <motion.span initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="text-indigo-600 font-black text-xs uppercase tracking-[0.3em] mb-4 block">Expertise Catalog</motion.span>
                 <h2 className="text-4xl md:text-7xl font-black text-slate-900 tracking-tighter mb-8 leading-none">Our Core Services.</h2>
@@ -458,7 +460,7 @@ export default function Services() {
               variants={staggerContainer}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: 0.1 }} // Added amount trigger to ensure visibility on mobile
               className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-14 px-4"
             >
               {SERVICES_DATA.map((service) => (
@@ -647,137 +649,14 @@ export default function Services() {
                       : 'bg-white border-2 border-slate-200 text-slate-900 hover:border-indigo-600 hover:text-indigo-600'
                     }`}
                   >
-                    Select {plan.name} Plan
+                   Get Started
                   </Button>
                 </motion.div>
               ))}
             </div>
-
-            {/* Custom Quote Notice */}
-            <div className="mt-20 p-10 rounded-[2.5rem] bg-indigo-900 text-white flex flex-col md:flex-row items-center justify-between gap-8 mx-4 shadow-3xl">
-              <div className="flex items-center gap-6">
-                <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center text-white text-3xl shrink-0">
-                  <FiSettings className="animate-spin-slow" />
-                </div>
-                <div>
-                  <h4 className="text-xl font-bold mb-1 italic">Need custom engineering?</h4>
-                  <p className="text-indigo-200/80 font-medium">We offer tailored Python/Node/AI quotes for specific enterprise requirements.</p>
-                </div>
-              </div>
-              <Button onClick={handleInquiry} variant="outline" className="font-black text-xs uppercase tracking-widest border-2 border-white/20 text-white hover:bg-white hover:text-indigo-900 whitespace-nowrap px-10 py-5">Request Custom Quote</Button>
-            </div>
           </SectionWrapper>
         </section>
-
-        {/* 6. FAQ SECTION */}
-        <section className="py-24 md:py-40 bg-white">
-          <SectionWrapper>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 px-4">
-              <div>
-                <div className="sticky top-32">
-                  <span className="text-indigo-600 font-black text-xs uppercase tracking-[0.3em] mb-4 block">Knowledge Base</span>
-                  <h2 className="text-4xl md:text-7xl font-black text-slate-900 mb-8 tracking-tighter leading-[0.9]">Common <br />Questions.</h2>
-                  <p className="text-slate-500 text-xl font-medium leading-relaxed max-w-sm mb-12">
-                    Everything you need to know about our technical partnership, delivery timelines, and technology choices.
-                  </p>
-                  
-                  <div onClick={handleInquiry} className="flex items-center gap-4 text-indigo-600 font-black tracking-[0.2em] text-xs uppercase group cursor-pointer transition-all hover:gap-6">
-                    Still have questions? Reach out <FiArrowRight className="text-lg" />
-                  </div>
-                </div>
-              </div>
-              
-              <div className="space-y-6">
-                {FAQS.map((faq, i) => (
-                  <FAQItem key={i} faq={faq} />
-                ))}
-              </div>
-            </div>
-          </SectionWrapper>
-        </section>
-
-        {/* 7. FINAL CONVERSION SECTION */}
-        <section className="py-32 md:py-56 px-4">
-          <SectionWrapper>
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="bg-slate-900 rounded-[3.5rem] md:rounded-[5rem] p-12 md:p-32 text-center text-white relative overflow-hidden shadow-[0_100px_150px_-50px_rgba(0,0,0,0.4)]"
-            >
-              {/* Dynamic Animated Gradient */}
-              <div className="absolute inset-0 pointer-events-none opacity-40">
-                <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-600 rounded-full blur-[180px] -translate-y-1/2 animate-pulse" />
-                <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-cyan-600 rounded-full blur-[180px] translate-y-1/2" />
-              </div>
-
-              <div className="relative z-10 max-w-4xl mx-auto">
-                <FiCode className="text-6xl md:text-8xl text-indigo-400 mx-auto mb-12 animate-bounce" />
-                <h2 className="text-4xl md:text-8xl font-black mb-12 tracking-tighter leading-[1] md:leading-[0.85]">
-                  Ready to build <br />the <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">future</span> of tech?
-                </h2>
-                <p className="text-slate-400 mb-16 max-w-3xl mx-auto text-xl md:text-2xl font-medium leading-relaxed">
-                  We are currently accepting new projects. Schedule a 30-minute discovery call 
-                  where we audit your current project and provide a clear roadmap for execution.
-                </p>
-                
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-8">
-                  <Button onClick={handleInquiry} className="bg-white text-slate-900 hover:bg-indigo-500 hover:text-white hover:scale-105 transition-all duration-300 px-16 py-7 rounded-3xl font-black text-xl shadow-2xl group flex items-center gap-4">
-                    Let's Build It <FiArrowRight className="group-hover:translate-x-2 transition-transform" />
-                  </Button>
-                </div>
-                
-                <div className="mt-16 flex items-center justify-center gap-10 opacity-30 grayscale hover:grayscale-0 transition-all duration-500">
-                  <FiMonitor className="text-4xl" />
-                  <FiCpu className="text-4xl" />
-                  <FiTerminal className="text-4xl" />
-                  <FiDatabase className="text-4xl" />
-                </div>
-              </div>
-            </motion.div>
-          </SectionWrapper>
-        </section>
-
       </div>
-      
-      {/* Global CSS for Animations */}
-      <style>{`
-        @keyframes spin-slow {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        .animate-spin-slow {
-          animation: spin-slow 12s linear infinite;
-        }
-        .shadow-3xl {
-          box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.2);
-        }
-        .shadow-4xl {
-          box-shadow: 0 60px 150px -30px rgba(0, 0, 0, 0.3);
-        }
-      `}</style>
     </div>
-  );
-}
-
-// Mock database icon since it wasn't in the initial imports
-function FiDatabase(props) {
-  return (
-    <svg 
-      stroke="currentColor" 
-      fill="none" 
-      strokeWidth="2" 
-      viewBox="0 0 24 24" 
-      strokeLinecap="round" 
-      strokeLinejoin="round" 
-      height="1em" 
-      width="1em" 
-      xmlns="http://www.w3.org/2000/svg" 
-      {...props}
-    >
-      <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
-      <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
-      <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
-    </svg>
   );
 }
