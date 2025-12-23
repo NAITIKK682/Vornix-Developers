@@ -63,7 +63,7 @@ A stunning, high-performance React + Tailwind CSS website for a web development,
 
 ```
 src/
-├── pages/
+├── pages/api/contact.js
 │   ├── Home.jsx          # Landing page with all sections
 │   ├── About.jsx         # Company info & team
 │   ├── Services.jsx      # Service offerings & details

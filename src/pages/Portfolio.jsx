@@ -21,7 +21,7 @@ const PROJECTS = [
   // 1. WEB DEVELOPMENT - E-COMMERCE
   {
     id: 1,
-    title: 'TasteMelt Restaurant Website',
+    title: 'TasteMelt Restaurant ',
     category: 'Web Development',
     type: 'E-Commerce Solutions',
     tech: ['React.js', 'Vite', 'Tailwind CSS', 'Node.js'],
@@ -51,27 +51,27 @@ const PROJECTS = [
     liveUrl: 'https://agri-smart-2-0-mjzzs34mg-naitikk682s-projects.vercel.app/',
     description: 'AgriSmart 2.0 – AI-powered bilingual farming assistant for Indian farmers with smart tools and community support.'
   },
-  // 4. WEB DEVELOPMENT - REAL ESTATE PORTAL
+  // 4. WEB DEVELOPMENT - Frontend Web Application
   {
     id: 4,
-    title: 'Vanguard Realty Portal',
+    title: 'VibeCart -  E-commerce ',
     category: 'Web Development',
-    type: 'Web Applications',
-    tech: ['TypeScript', 'Firebase', 'Algolia', 'Google Maps'],
+    type: 'Frontend Web Application',
+    tech: ['HTML5', 'CSS3', 'JavaScript (ES6+)', 'Git'],
     img: '/images/portfolio/web-4.jpg',
-    liveUrl: 'https://vanguard.example.com',
-    description: 'A global real estate platform with instant search, map integration, virtual tour capabilities, and lead management systems.'
+    liveUrl: 'https://vibecart-ecommerce-ui.vercel.app/',
+    description: 'A responsive Indian-market e-commerce frontend offering fashion, cosmetics, and footwear with seamless user experience.'
   },
-  // 5. WEB DEVELOPMENT - HEALTHCARE HUB
+  // 5. WEB DEVELOPMENT - JustHome
   {
     id: 5,
-    title: 'Syncro Health Hub',
+    title: 'JustHome',
     category: 'Web Development',
-    type: 'Web Applications',
-    tech: ['React', 'AWS', 'GraphQL', 'Docker'],
+    type: 'Frontend Web Application',
+    tech: ['React', 'Vite', 'Javascript', 'Tailwind CSS'],
     img: '/images/portfolio/web-5.jpg',
-    liveUrl: 'https://syncro.example.com',
-    description: 'HIPAA-compliant healthcare management system for patient records, appointment scheduling, and secure telehealth video calls.'
+    liveUrl: 'https://realestate-website-lilac.vercel.app/',
+    description: 'A Dubai-focused real estate platform showcasing properties for sale and rent with agent profiles and market insights.'
   },
   // 6. WEB DEVELOPMENT - MODERN BLOG
   {
